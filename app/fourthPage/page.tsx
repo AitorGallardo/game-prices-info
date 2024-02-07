@@ -72,30 +72,6 @@ export default function FourthPage() {
           </div>
         </div>
       </section>
-      <footer className="bg-[#161b2f] py-10">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between">
-            <div>
-              <h3 className="text-xl font-bold">Game Price Visualizer</h3>
-              <p className="mt-2 text-gray-400">All your gaming deals in one place.</p>
-            </div>
-            <nav className="space-x-4">
-              <a className="hover:text-gray-300" href="#">
-                Home
-              </a>
-              <a className="hover:text-gray-300" href="#">
-                Features
-              </a>
-              <a className="hover:text-gray-300" href="#">
-                Pricing
-              </a>
-              <a className="hover:text-gray-300" href="#">
-                About
-              </a>
-            </nav>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

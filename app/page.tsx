@@ -28,12 +28,6 @@ const footerLinks = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0C0E16] text-white">
-      <nav className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <h1 className="text-3xl font-bold">GamePriceVis</h1>
-        <div className="flex space-x-4">
-          <NavLinks links={navLinks} />
-        </div>
-      </nav>
       <header className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-5xl font-bold leading-tight mb-4">
           Visualize Game Price History
@@ -107,19 +101,6 @@ export default function Home() {
           <h1>Chart Placeholder</h1>
         </div> */}
       </section>
-      <footer className="bg-[#161B22] py-8">
-        <div className="container mx-auto px-4 grid grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-2">GamePriceVis</h3>
-            <p className="text-sm">
-              The ultimate tool for gamers to track and analyze game prices.
-            </p>
-          </div>
-          <div className="flex flex-col space-y-2">
-          <NavLinks links={footerLinks} />
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
