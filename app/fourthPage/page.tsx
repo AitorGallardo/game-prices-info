@@ -1,8 +1,6 @@
 
 import { Button } from "@/components/ui/button"
 import LineChart from "@/components/ui/lineChart"
-import { ResponsiveLine } from "@nivo/line"
-import Link from "next/link"
 
 export default function FourthPage() {
   return (
