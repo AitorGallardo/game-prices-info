@@ -6,7 +6,11 @@ import {
   CardContent,
   Card,
 } from "@/components/ui/card";
+import SimpleLineChart from "@/components/ui/simpleLineChart";
+import { Skeleton } from "@/components/ui/skeleton";
+import LineChartWrapper from "@/components/ui/ssLineChartWrapper";
 import { anyModel } from "@/lib/data";
+import { Suspense } from "react";
 
 const navLinks = [
   { href: "/secondPage", label: "SecondPage" },
@@ -24,9 +28,12 @@ const footerLinks = [
 ];
 
 export default async function Home() {
-  const m = new anyModel();
-  const getAll = await m.getAll({ category: "cereal"})
-  
+  // const error = console.error;
+  // console.error = (...args: any) => {
+  //   if (/defaultProps/.test(args[0])) return;
+  //   error(...args);
+  // };
+
   return (
     <div className="min-h-screen bg-[#0C0E16] text-white">
       <header className="container mx-auto px-4 py-20 text-center">
@@ -98,18 +105,23 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-4xl font-bold mb-8">Comprehensive Analytics</h2>
         {/* <LineChart className="w-full h-[300px]" /> */}
+        <Suspense
+          fallback={
+            <div className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            </div>
+          }
+        >
+          <LineChartWrapper />
+        </Suspense>
         <div className="flex justify-center items-center h-[400px] w-full bg-purple-500">
           <h1>Chart Placeholder</h1>
-          <ul>
-          {
-            getAll.map((item:any) => {
-              return <li key={item.id}>{item.name}</li>;
-            })
-            }
-          </ul>
         </div>
       </section>
     </div>
   );
 }
-

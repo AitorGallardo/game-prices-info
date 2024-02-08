@@ -10,6 +10,13 @@ const DEFAULT_CONFIG = {
 
 const pool = new Pool(DEFAULT_CONFIG);
 
+function delay(ms: number, data: any): Promise<any> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(data);
+    }, ms);
+  });
+}
 export class anyModel {
   async getAll({ category }: any): Promise<any> {
     const client = await pool.connect();
@@ -21,10 +28,10 @@ export class anyModel {
           "SELECT * FROM cart_items WHERE LOWER(category::TEXT) = $1",
           [lowerCaseCategory]
         );
-        return result.rows;
+        return await delay(2000, result.rows);
       }
       const result = await client.query("SELECT * FROM cart_items");
-      return result.rows;
+      return await delay(2000, result.rows);
     } finally {
       client.release();
     }
