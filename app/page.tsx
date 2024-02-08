@@ -6,9 +6,7 @@ import {
   CardContent,
   Card,
 } from "@/components/ui/card";
-import { ResponsiveLine } from "@nivo/line";
-import NavLinks from "@/components/ui/nav-links";
-import LineChart from "@/components/ui/lineChart";
+import { anyModel } from "@/lib/data";
 
 const navLinks = [
   { href: "/secondPage", label: "SecondPage" },
@@ -25,7 +23,10 @@ const footerLinks = [
   { href: "/topGames23", label: "Contact" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const m = new anyModel();
+  const getAll = await m.getAll({ category: "cereal"})
+  
   return (
     <div className="min-h-screen bg-[#0C0E16] text-white">
       <header className="container mx-auto px-4 py-20 text-center">
@@ -96,10 +97,17 @@ export default function Home() {
       </section>
       <section className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-4xl font-bold mb-8">Comprehensive Analytics</h2>
-        <LineChart className="w-full h-[300px]" />
-        {/* <div className="flex justify-center items-center h-[400px] w-full bg-purple-500">
+        {/* <LineChart className="w-full h-[300px]" /> */}
+        <div className="flex justify-center items-center h-[400px] w-full bg-purple-500">
           <h1>Chart Placeholder</h1>
-        </div> */}
+          <ul>
+          {
+            getAll.map((item:any) => {
+              return <li key={item.id}>{item.name}</li>;
+            })
+            }
+          </ul>
+        </div>
       </section>
     </div>
   );
