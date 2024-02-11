@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import SimpleLineChart from "@/components/ui/simpleLineChart";
 import { Skeleton } from "@/components/ui/skeleton";
-import LineChartWrapper from "@/components/ui/ssLineChartWrapper";
+import LineChartWrapper from "@/components/ssLineChartWrapper";
 import { anyModel } from "@/lib/data";
 import { Suspense } from "react";
 

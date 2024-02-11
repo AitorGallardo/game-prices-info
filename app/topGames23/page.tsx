@@ -1,4 +1,7 @@
+import Search from "@/components/search";
+import { TableDemo } from "@/components/table-demo";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function TopGames23Page() {
@@ -16,9 +19,12 @@ export default function TopGames23Page() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-center text-4xl font-bold">Games List</h2>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Search className="my-8" placeholder="Search"/>
+          <TableDemo/>
+          {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
-              <img
+
+              <Image
                 alt="Game 1"
                 className="w-full h-64 object-cover rounded-lg shadow-md"
                 height="200"
@@ -32,7 +38,7 @@ export default function TopGames23Page() {
               <h3 className="mt-4 text-xl font-bold">Game 1</h3>
               <p className="mt-2 text-gray-400">Best price: $30</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import Link from "next/link"
 import LineChart from "@/components/ui/lineChart"
-import { BarChart } from "@/components/ui/barChart"
+import { BarChart } from "@/components/barChart"
 
 export default function ThirdPage() {
   return (
