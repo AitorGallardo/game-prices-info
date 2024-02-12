@@ -2,6 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
+
+const DEBOUNCE_TIME = 300;
 
 export default function Search({
   className,
@@ -14,7 +17,7 @@ export default function Search({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = (value: string) => {
+  const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
 
     if (value) {
@@ -24,7 +27,7 @@ export default function Search({
     }
 
     replace(`${pathname}?${params.toString()}`);
-  };
+  },DEBOUNCE_TIME);
 
   return (
     <div className={cn("relative flex flex-1 flex-shrink-0", className)}>

@@ -2,10 +2,19 @@
 import { Button } from "@/components/ui/button"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import Link from "next/link"
-import LineChart from "@/components/ui/lineChart"
+import LineChart from "@/components/lineChart"
 import { BarChart } from "@/components/barChart"
 
-export default function ThirdPage() {
+export default function ThirdPage({searchParams}:{
+  searchParams?: {
+    search?: string
+    page?: string
+  };
+}) {
+
+  const currentPage = Number(searchParams?.page) || 1;
+  const search = searchParams?.search || "";
+
   return (
     <div className="bg-[#0C0E16] text-white">
       <div className="max-w-7xl mx-auto px-6 py-16">

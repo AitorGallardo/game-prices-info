@@ -1,3 +1,4 @@
+import { LinkButton, NavigationButton } from "@/components/nav-button";
 import Search from "@/components/search";
 import { TableDemo } from "@/components/table-demo";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,9 @@ export default function TopGames23Page() {
         <p className="mt-4 text-lg text-gray-400">
           Explore the most popular games of the year 2023
         </p>
-        <Button className="mt-6" variant="secondary">
+        <NavigationButton linkRef="/">
           Back to Home
-        </Button>
+        </NavigationButton>
       </header>
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
@@ -42,5 +43,13 @@ export default function TopGames23Page() {
         </div>
       </section>
     </div>
+  );
+}
+
+export const HomeLink = () => {
+  return (
+    <Link href="/">
+      <a>Home</a>
+    </Link>
   );
 }

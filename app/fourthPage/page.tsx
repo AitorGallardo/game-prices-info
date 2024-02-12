@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button"
-import LineChart from "@/components/ui/lineChart"
+import LineChart from "@/components/lineChart"
  
 export default function FourthPage() {
   return (

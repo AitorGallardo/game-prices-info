@@ -53,8 +53,12 @@ import {
       paymentMethod: "Credit Card",
     },
   ]
+
+  type TableDemoProps = {
+    query?: string; // Esta prop es opcional
+  };
   
-  export function TableDemo() {
+  export const TableDemo: React.FC<TableDemoProps> = ({ query }= {}) => {
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
