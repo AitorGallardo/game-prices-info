@@ -5,15 +5,7 @@ import Link from "next/link"
 import LineChart from "@/components/lineChart"
 import { BarChart } from "@/components/barChart"
 
-export default function ThirdPage({searchParams}:{
-  searchParams?: {
-    search?: string
-    page?: string
-  };
-}) {
-
-  const currentPage = Number(searchParams?.page) || 1;
-  const search = searchParams?.search || "";
+export default function ThirdPage(){
 
   return (
     <div className="bg-[#0C0E16] text-white">
@@ -116,5 +108,5 @@ export default function ThirdPage({searchParams}:{
       </footer>
     </div>
   )
-}
+  }
 

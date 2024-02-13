@@ -1,11 +1,16 @@
-import { LinkButton, NavigationButton } from "@/components/nav-button";
+import {  NavigationButton } from "@/components/nav-button";
 import Search from "@/components/search";
 import { TableDemo } from "@/components/table-demo";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 
-export default function TopGames23Page() {
+export default function TopGames23Page({searchParams}:{
+  searchParams?: {
+    search?: string
+    page?: string
+  };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const search = searchParams?.search || "";
   return (
     <div className="bg-[#0c0e16] text-white">
       <header className="flex flex-col items-center justify-center py-20">
