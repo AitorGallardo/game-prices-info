@@ -1,4 +1,6 @@
+
 import {  NavigationButton } from "@/components/nav-button";
+import { PaginationDemo } from "@/components/pagination-demo";
 import Search from "@/components/search";
 import { TableDemo } from "@/components/table-demo";
 import Link from "next/link";
@@ -27,6 +29,7 @@ export default function TopGames23Page({searchParams}:{
           <h2 className="text-center text-4xl font-bold">Games List</h2>
           <Search className="my-8" placeholder="Search"/>
           <TableDemo/>
+          <PaginationDemo/>
           {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
 
