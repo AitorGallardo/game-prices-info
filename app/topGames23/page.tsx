@@ -13,6 +13,10 @@ export default function TopGames23Page({searchParams}:{
 }) {
   const currentPage = Number(searchParams?.page) || 1;
   const search = searchParams?.search || "";
+
+  // TODO: crear funcion para sacar de la DB las el numero de pages con count(*) y dividir entre items per page;
+  const totalPages = 10;
+
   return (
     <div className="bg-[#0c0e16] text-white">
       <header className="flex flex-col items-center justify-center py-20">
