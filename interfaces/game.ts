@@ -6,8 +6,9 @@ export interface Game {
     platform: string;
     image: string;
     discount: number;
-    category: string;
+    genre: string;
     description: string;
+    releaseYear: number;
     rating: number;
     onSale: boolean;
     trending: boolean;

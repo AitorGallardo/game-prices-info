@@ -1,3 +1,4 @@
+import { Game } from "@/interfaces/game";
 import { Pool } from "pg";
 
 const DEFAULT_CONFIG = {
@@ -18,7 +19,7 @@ function delay(ms: number, data: any): Promise<any> {
   });
 }
 export class GameModel {
-  async getAll({ genre }: any): Promise<any> {
+  async getAll({ genre }: any): Promise<Game[]> {
     const client = await pool.connect();
     try {
       if (genre) {
