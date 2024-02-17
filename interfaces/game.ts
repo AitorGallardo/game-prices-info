@@ -5,11 +5,11 @@ export interface Game {
     releaseDate: string;
     platform: string;
     image: string;
-    discount: number;
+    discount: number | null;
     genre: string;
-    description: string;
+    description: string | null;
     releaseYear: number;
-    rating: number;
+    rating: number | null;
     onSale: boolean;
     trending: boolean;
     tags: string[];

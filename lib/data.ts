@@ -18,24 +18,41 @@ function delay(ms: number, data: any): Promise<any> {
     }, ms);
   });
 }
+// TODO: change genre and platform to be using arrays -> consider in getAll function
+type SearchOptions = {
+  genre?: string;
+  release_year?: number;
+  platform?: string;
+  title?: string;
+};
+
 export class GameModel {
-  async getAll({ genre }: any): Promise<Game[]> {
-    const client = await pool.connect();
-    try {
-      if (genre) {
-        genre = genre as string;
-        const lowerCaseGenre = genre.toLowerCase();
-        const result = await client.query(
-          "SELECT * FROM games WHERE LOWER(genre::TEXT) = $1",
-          [lowerCaseGenre]
-        );
-        return await delay(2000, result.rows);
-      }
-      const result = await client.query("SELECT * FROM cart_items");
-      return await delay(2000, result.rows);
-    } finally {
-      client.release();
+
+async getAll(options: SearchOptions): Promise<Game[]> {
+  const client = await pool.connect();
+
+  let query = "SELECT * FROM games";
+  const params:string[] = [];
+  const conditions:string[] = [];
+
+  Object.entries(options).forEach(([key, value], index) => {
+    if (value) {
+      conditions.push(`LOWER(${key}::TEXT) LIKE LOWER($${index + 1})`);
+      params.push(`%${String(value).toLowerCase()}%`);
     }
+  });
+
+  // If there are conditions, add a WHERE clause to the query
+  if (conditions.length > 0) {
+    query += " WHERE " + conditions.join(" AND ");
   }
+
+  try {
+    const result = await client.query(query, params);
+    return await delay(2000, result.rows);
+  } finally {
+    client.release();
+  }
+}
 
 }
