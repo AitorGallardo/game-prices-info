@@ -6,8 +6,7 @@ import SimpleLineChart from "./simpleLineChart";
 export default async function LineChartWrapper(props: any) {
   
   const m = new GameModel();
-  const getAll = await m.getAll({ title: "legend" });
-  console.log(getAll);
+  const getAll = await m.getAll({ genre: [1,2,7] });
   return (
     <>
       <SimpleLineChart />

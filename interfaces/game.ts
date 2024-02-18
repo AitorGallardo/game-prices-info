@@ -3,10 +3,10 @@ export interface Game {
     title: string;
     price: number;
     releaseate: string;
-    platform: string;
+    platform: number[];
     image: string;
     discount: number | null;
-    genre: string;
+    genre: number[];
     description: string | null;
     release_year: number;
     rating: number | null;
