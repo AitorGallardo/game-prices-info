@@ -9,6 +9,8 @@ const DEFAULT_CONFIG = {
   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 1234,
 };
 
+const ITEMS_PER_PAGE = 6;
+
 const pool = new Pool(DEFAULT_CONFIG);
 
 function delay(ms: number, data: any): Promise<any> {
@@ -19,12 +21,8 @@ function delay(ms: number, data: any): Promise<any> {
   });
 }
 // TODO: change genre and platform to be using arrays -> consider in getAll function
-type SearchOptions = {
-  genre?: string;
-  release_year?: number;
-  platform?: string;
-  title?: string;
-};
+
+type SearchOptions = Partial<Pick<Game, 'title' | 'genre' | 'platform' | 'release_year'>>;
 
 export class GameModel {
   async getAll(options: SearchOptions): Promise<Game[]> {
@@ -57,6 +55,18 @@ export class GameModel {
     try {
       const result = await client.query(query, params);
       return await delay(2000, result.rows);
+    } finally {
+      client.release();
+    }
+  }
+
+  async getAllPages(){
+    const client = await pool.connect();
+    try {
+      const result = await client.query("SELECT COUNT(*) FROM games");
+      const totalPages = Math.ceil(Number(result.rows[0].count) / ITEMS_PER_PAGE);
+      
+      return totalPages;
     } finally {
       client.release();
     }

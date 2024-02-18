@@ -2,16 +2,17 @@ export interface Game {
     id: number;
     title: string;
     price: number;
-    releaseDate: string;
+    releaseate: string;
     platform: string;
     image: string;
     discount: number | null;
     genre: string;
     description: string | null;
-    releaseYear: number;
+    release_year: number;
     rating: number | null;
-    onSale: boolean;
+    on_sale: boolean;
     trending: boolean;
     tags: string[];
     reviews: string[];
 }
+
