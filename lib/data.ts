@@ -81,8 +81,7 @@ export class GameModel {
       client.release();
     }
   }
-  // MIRAR EN VIDEO. CADA VEZ QUE ESCRIBO EN EL SEARCH INPUT, SE HACEN 2 QUERIES? 
-  //TODO: (MIRAR DE GITHUB!) Lo que quiero hacer es buscar solo por searchquery y mirar solo en el titlez
+
   async getFiltered(options: SearchOptions,currentPage:number): Promise<Game[]> {
     const client = await pool.connect();
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -119,13 +118,12 @@ export class GameModel {
 
     try {
       const result = await client.query(query, params);
-      return await delay(2000, result.rows);
+      return await delay(1000, result.rows);
     } finally {
       client.release();
     }
   }
-//TODO: Meterle tmb searchquery como en la funcion anterior
-  async getAllPages(options: SearchOptions): Promise<number> {
+  async getPagesTotal(options: SearchOptions): Promise<number> {
     const client = await pool.connect();
 
     let query =
@@ -150,7 +148,7 @@ export class GameModel {
     }
     
     try {
-      const result = await client.query("SELECT COUNT(*) FROM games");
+      const result = await client.query(query,params);
       const totalPages = Math.ceil(Number(result.rows[0].count) / ITEMS_PER_PAGE);
       
       return totalPages;

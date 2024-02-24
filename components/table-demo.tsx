@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { GameModel } from "@/lib/data";
   
   const invoices = [
     {
@@ -55,10 +56,17 @@ import {
   ]
 
   type TableDemoProps = {
-    query?: string; // Esta prop es opcional
+    query?: any; 
+    currentPage?: number;
   };
   
-  export const TableDemo: React.FC<TableDemoProps> = ({ query }= {}) => {
+  export const TableDemo: React.FC<TableDemoProps> = async({ query,currentPage=1 }= {}) => {
+
+    const game = new GameModel();
+    const getFilteredResults = await game.getFiltered(query,currentPage);
+
+    console.log("NEW QUERY", query);
+
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>

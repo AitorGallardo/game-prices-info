@@ -35,13 +35,15 @@ const PaginationItem = React.forwardRef<
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean,
+  disabled?: boolean,
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
 const PaginationLink = ({
   className,
   isActive,
+  disabled,
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
@@ -53,6 +55,7 @@ const PaginationLink = ({
         size,
       }),
       `aria-[current='page']:text-red-400 ${className}`
+      ,{ "opacity-50 pointer-events-none": disabled }
     )}
     {...props}
   />

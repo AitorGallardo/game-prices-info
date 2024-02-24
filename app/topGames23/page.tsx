@@ -1,31 +1,24 @@
-
-import {  NavigationButton } from "@/components/nav-button";
-import { PaginationDemo } from "@/components/pagination-demo";
+import { NavigationButton } from "@/components/nav-button";
+import PaginationDemo from "@/components/pagination-demo";
 import Search from "@/components/search";
 import { TableDemo } from "@/components/table-demo";
+import { Skeleton } from "@/components/ui/skeleton";
 import { GameModel } from "@/lib/data";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default async function TopGames23Page({searchParams}:{
+export default async function TopGames23Page({
+  searchParams,
+}: {
   searchParams?: {
-    search?: string
-    page?: string
+    search?: string;
+    page?: string;
   };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
   const search = searchParams?.search || "";
-  const page = Number(searchParams?.page) || 1;
-
-  // TODO: crear funcion para sacar de la DB las el numero de pages con count(*) y dividir entre items per page;
-    const totalPages = 10;
-
-    const game = new GameModel();
-    const getFiltered = await game.getFiltered({ title: search }, page);  
-    console.log('Search filtered word: ',search);
-    console.log('Search filtered RES: ',getFiltered);
-
-    const getPages = await game.getAllPages({ title: search });  
-    console.log('GET ALL PAGES: ',getPages);
+  const game = new GameModel();
+  const totalPages = await game.getPagesTotal({ title: search });
 
   return (
     <div className="bg-[#0c0e16] text-white">
@@ -34,16 +27,30 @@ export default async function TopGames23Page({searchParams}:{
         <p className="mt-4 text-lg text-gray-400">
           Explore the most popular games of the year 2023
         </p>
-        <NavigationButton linkRef="/">
-          Back to Home
-        </NavigationButton>
+        <NavigationButton linkRef="/">Back to Home</NavigationButton>
       </header>
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-center text-4xl font-bold">Games List</h2>
-          <Search className="my-8" placeholder="Search"/>
-          <TableDemo/>
-          <PaginationDemo/>
+          <Search className="my-8" placeholder="Search" />
+          <Suspense
+            key={currentPage + search} // This is important to re-render the component, if not used key it will just work first time
+            fallback={
+              <div className="flex flex-col space-y-3">
+                <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-[250px]" />
+                  <Skeleton className="h-4 w-[200px]" />
+                </div>
+              </div>
+            }
+          >
+            <TableDemo
+              query={{ title: search }}
+              currentPage={currentPage}
+            />
+          </Suspense>
+          <PaginationDemo totalPages={totalPages}/>
           {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
 
@@ -74,4 +81,4 @@ export const HomeLink = () => {
       <a>Home</a>
     </Link>
   );
-}
+};
