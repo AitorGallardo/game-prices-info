@@ -9,7 +9,7 @@ const DEFAULT_CONFIG = {
   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 1234,
 };
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 15;
 
 const pool = new Pool(DEFAULT_CONFIG);
 
@@ -42,7 +42,7 @@ export class GameModel {
     const client = await pool.connect();
 
     let query =
-      "SELECT games.id AS game_id, games.title,games.price,games.release_year,ARRAY_AGG(DISTINCT game_genre.genre_id) AS genre_ids, ARRAY_AGG(DISTINCT game_platform.platform_id) AS platform_ids FROM games";
+      "SELECT games.id AS id, games.title,games.price,games.release_year,ARRAY_AGG(DISTINCT game_genre.genre_id) AS genre_ids, ARRAY_AGG(DISTINCT game_platform.platform_id) AS platform_ids FROM games";
     const params: string[] = [];
     const conditions: string[] = [];
 
@@ -87,7 +87,7 @@ export class GameModel {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
     let query =
-      "SELECT games.id AS game_id, games.title,games.price,games.release_year,ARRAY_AGG(DISTINCT game_genre.genre_id) AS genre_ids, ARRAY_AGG(DISTINCT game_platform.platform_id) AS platform_ids FROM games";
+      "SELECT games.id AS id, games.title,games.price,games.release_year,ARRAY_AGG(DISTINCT game_genre.genre_id) AS genre_ids, ARRAY_AGG(DISTINCT game_platform.platform_id) AS platform_ids FROM games";
     const params: string[] = [];
     const conditions: string[] = [];
 
@@ -110,9 +110,6 @@ export class GameModel {
     //Grouping by 
     query += " GROUP BY games.id, games.title, games.price, games.release_year";
 
-    //Order by
-    query += " ORDER BY games.id DESC ";
-
     //Limit and offset
     query += ` LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
 
@@ -127,7 +124,7 @@ export class GameModel {
     const client = await pool.connect();
 
     let query =
-      "SELECT COUNT(*) FROM games";
+      "SELECT COUNT(DISTINCT games.id) FROM games";
     const params: string[] = [];
     const conditions: string[] = [];
 

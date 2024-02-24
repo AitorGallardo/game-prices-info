@@ -12,15 +12,13 @@ import {
 import { generatePagination } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function PaginationDemo({ totalPages }: { totalPages: number }) {
+export default function PaginationDemo({ className, totalPages }: { className?:string, totalPages: number }) {
+
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const allPages = generatePagination(currentPage, totalPages);
-
-  console.log('CURRENT PAGE', currentPage)
-  console.log('TOTAL PAGES', totalPages)
 
   const createPageURL = (page: number) => {
     const params = new URLSearchParams(searchParams);
@@ -29,7 +27,7 @@ export default function PaginationDemo({ totalPages }: { totalPages: number }) {
   };
 
   return (
-    <Pagination>
+    <Pagination className={className}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious href={createPageURL(currentPage - 1)} />
@@ -60,7 +58,10 @@ export default function PaginationDemo({ totalPages }: { totalPages: number }) {
         </div>
         {/* TODO: Mirar de poner property disabled */}
         <PaginationItem>
-          <PaginationNext href={createPageURL(currentPage + 1)} disabled={currentPage===totalPages} />
+          <PaginationNext
+            href={createPageURL(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

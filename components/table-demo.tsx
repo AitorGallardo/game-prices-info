@@ -63,37 +63,37 @@ import { GameModel } from "@/lib/data";
   export const TableDemo: React.FC<TableDemoProps> = async({ query,currentPage=1 }= {}) => {
 
     const game = new GameModel();
-    const getFilteredResults = await game.getFiltered(query,currentPage);
+    const filteredGames = await game.getFiltered(query,currentPage);
 
-    console.log("NEW QUERY", query);
+    // console.log("TABLE GAMES RESULT", filteredGames);
 
     return (
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>A list of the top games of 2023.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[100px]">Id</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead className="text-right">Release Year</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+          {filteredGames.map((game) => (
+            <TableRow key={game.id}>
+              <TableCell className="font-medium">{game.id}</TableCell>
+              <TableCell>{game.title}</TableCell>
+              <TableCell>{game.price}</TableCell>
+              <TableCell className="text-right">{game.release_year}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
+        {/* <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">$2,500.00</TableCell>
           </TableRow>
-        </TableFooter>
+        </TableFooter> */}
       </Table>
     )
   }
