@@ -3,9 +3,10 @@ import {  NavigationButton } from "@/components/nav-button";
 import { PaginationDemo } from "@/components/pagination-demo";
 import Search from "@/components/search";
 import { TableDemo } from "@/components/table-demo";
+import { GameModel } from "@/lib/data";
 import Link from "next/link";
 
-export default function TopGames23Page({searchParams}:{
+export default async function TopGames23Page({searchParams}:{
   searchParams?: {
     search?: string
     page?: string
@@ -13,9 +14,18 @@ export default function TopGames23Page({searchParams}:{
 }) {
   const currentPage = Number(searchParams?.page) || 1;
   const search = searchParams?.search || "";
+  const page = Number(searchParams?.page) || 1;
 
   // TODO: crear funcion para sacar de la DB las el numero de pages con count(*) y dividir entre items per page;
-  const totalPages = 10;
+    const totalPages = 10;
+
+    const game = new GameModel();
+    const getFiltered = await game.getFiltered({ title: search }, page);  
+    console.log('Search filtered word: ',search);
+    console.log('Search filtered RES: ',getFiltered);
+
+    const getPages = await game.getAllPages({ title: search });  
+    console.log('GET ALL PAGES: ',getPages);
 
   return (
     <div className="bg-[#0c0e16] text-white">

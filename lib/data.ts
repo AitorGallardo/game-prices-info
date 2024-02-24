@@ -111,6 +111,12 @@ export class GameModel {
     //Grouping by 
     query += " GROUP BY games.id, games.title, games.price, games.release_year";
 
+    //Order by
+    query += " ORDER BY games.id DESC ";
+
+    //Limit and offset
+    query += ` LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+
     try {
       const result = await client.query(query, params);
       return await delay(2000, result.rows);
@@ -119,8 +125,30 @@ export class GameModel {
     }
   }
 //TODO: Meterle tmb searchquery como en la funcion anterior
-  async getAllPages(){
+  async getAllPages(options: SearchOptions): Promise<number> {
     const client = await pool.connect();
+
+    let query =
+      "SELECT COUNT(*) FROM games";
+    const params: string[] = [];
+    const conditions: string[] = [];
+
+    Object.entries(options).forEach(([key, value], index) => {
+      if (value) {
+        conditions.push(`LOWER(${key}::TEXT) LIKE LOWER($${index + 1})`);
+        params.push(`%${String(value).toLowerCase()}%`);
+      }
+    });
+
+    // Joining tables
+    query += " LEFT JOIN game_genre ON game_genre.game_id = games.id";
+    query += " LEFT JOIN game_platform ON game_platform.game_id = games.id";
+    
+    // If there are conditions, add a WHERE clause to the query
+    if (conditions.length > 0) {
+      query += " WHERE " + conditions.join(" AND ");
+    }
+    
     try {
       const result = await client.query("SELECT COUNT(*) FROM games");
       const totalPages = Math.ceil(Number(result.rows[0].count) / ITEMS_PER_PAGE);
