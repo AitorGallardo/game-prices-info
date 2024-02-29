@@ -23,7 +23,10 @@ export default async function TopGames23Page({
   return (
     <div className="bg-[#0c0e16] text-white">
       <header className="flex flex-col items-center justify-center py-20">
-        <h1 className="text-5xl font-bold">Top 50 Games of 2023</h1>
+        <div className="relative">
+        <div className="absolute inset-0.5 bg-gradient-to-r from-green-600 to-purple-600 rounded-lg blur-xl opacity-75"></div>
+        <h1 className="z-50 text-5xl font-bold">Top 50 Games of 2023</h1>
+        </div>
         <p className="mt-4 text-lg text-gray-400">
           Explore the most popular games of the year 2023
         </p>
